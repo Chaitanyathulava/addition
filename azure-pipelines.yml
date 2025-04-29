@@ -1,25 +1,17 @@
-name: Run Addition Script
+trigger:
+- master
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+pool:
+  vmImage: 'ubuntu-latest'
 
-jobs:
-  run-script:
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.11'
+    addToPath: true
 
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: 📥 Checkout code
-      uses: actions/checkout@v3
-
-    - name: 🐍 Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-
-    - name: ▶️ Run addition.py with sample input
-      run: |
-        echo -e "5\n7" | python addition.py
+- script: |
+    echo "5"
+    echo "7"
+    echo -e "5\n7" | python3 addition.py
+  displayName: 'Run addition.py'
